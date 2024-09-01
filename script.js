@@ -94,20 +94,21 @@ async function displayAlbums() {
   // console.log(response)
   let div = document.createElement("div");
   div.innerHTML = response;
-  let anchors = div.getElementsByTagName("a");
-
-  let firstMatchSkipped = false;
+  let anchors = div.getElementsByClassName("icon"); //a
+  // console.log(anchors)
+  // let firstMatchSkipped = false;
 
   let array = Array.from(anchors);
+  console.log(array);
   for (let i = 0; i < array.length; i++) {
     const e = array[i];
 
     if (e.href.includes("/music") && !e.href.includes(".htaccess")) {
       // Skip the first match
-      if (!firstMatchSkipped) {
-        firstMatchSkipped = true;
-        continue; // Use continue instead of return
-      }
+      // if (!firstMatchSkipped) {
+      //   firstMatchSkipped = true;
+      //   continue; // Use continue instead of return                    2
+      // }
 
       let folder = e.href.split("/").slice(-1)[0];
       console.log(folder);
