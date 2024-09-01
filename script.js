@@ -30,23 +30,22 @@ function formatTime(seconds) {
 
 async function getSongs(folder) {
   curfolder = folder;
-  try {
-    let data = await fetch(`/${folder}/`);
-    let response = await data.text();
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    let as = div.getElementsByTagName("a");
-    songs = [];
-    for (let i = 0; i < as.length; i++) {
-      const element = as[i];
-      if (element.href.endsWith(".mp3")) {
-        songs.push(element.href.split(`/${folder}/`)[1]);
-      }
+  let data = await fetch(`/${folder}/`);
+  let response = await data.text();
+  let div = document.createElement("div");
+  div.innerHTML = response;
+  let as = div.getElementsByTagName("a");
+  songs = [];
+  for (let i = 0; i < as.length; i++) {
+    const element = as[i];
+    if (element.href.endsWith(".mp3")) {
+      songs.push(element.href.split(`/${folder}/`)[1]);
     }
+  }
 
-    songUl.innerHTML = "";
-    for (const song of songs) {
-      songUl.innerHTML += `
+  songUl.innerHTML = "";
+  for (const song of songs) {
+    songUl.innerHTML += `
         <li>
           <div class="det">
             <i class="ri-music-2-line"></i>
@@ -59,23 +58,20 @@ async function getSongs(folder) {
             <i class="ri-play-circle-line"></i>
           </div>
         </li>`;
-    }
-
-    // Attach event listeners to each song
-    Array.from(
-      document.querySelector(".songList").getElementsByTagName("li")
-    ).forEach((e) => {
-      e.addEventListener("click", (element) => {
-        playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
-        play.classList.remove("ri-play-line");
-        play.classList.add("ri-pause-line");
-      });
-    });
-
-    return songs;
-  } catch (error) {
-    console.error("Error fetching songs:", error);
   }
+
+  // Attach event listeners to each song
+  Array.from(
+    document.querySelector(".songList").getElementsByTagName("li")
+  ).forEach((e) => {
+    e.addEventListener("click", (element) => {
+      playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
+      play.classList.remove("ri-play-line");
+      play.classList.add("ri-pause-line");
+    });
+  });
+
+  return songs;
 }
 
 const playMusic = (track, pause = false) => {
