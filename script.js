@@ -134,6 +134,7 @@ async function displayAlbums() {
     // console.log(e);
     e.addEventListener("click", async (item) => {
       songs = await getSongs(`music/${item.currentTarget.dataset.folder}`);
+      console.log("songs:", songs);
       playMusic(songs[0]);
       play.classList.remove("ri-play-line");
       play.classList.add("ri-pause-line");
