@@ -94,29 +94,29 @@ async function displayAlbums() {
   // console.log(response)
   let div = document.createElement("div");
   div.innerHTML = response;
-  let anchors = div.getElementsByClassName("icon"); //a
+  let anchors = div.getElementsByTagName("a"); //a
   // console.log(anchors)
-  // let firstMatchSkipped = false;
+  let firstMatchSkipped = false;
 
   let array = Array.from(anchors);
-  console.log(array);
+  // console.log(array);
   for (let i = 0; i < array.length; i++) {
     const e = array[i];
 
     if (e.href.includes("/music") && !e.href.includes(".htaccess")) {
       // Skip the first match
-      // if (!firstMatchSkipped) {
-      //   firstMatchSkipped = true;
-      //   continue; // Use continue instead of return                    2
-      // }
+      if (!firstMatchSkipped) {
+        firstMatchSkipped = true;
+        continue; // Use continue instead of return                    2
+      }
 
       let folder = e.href.split("/").slice(-1)[0];
-      console.log(folder);
+      // console.log(folder);
 
       // Fetch metadata
       let metadata = await fetch(`/music/${folder}/info.json`);
       let metadataResponse = await metadata.json();
-      // console.log(metadataResponse);
+      console.log(metadataResponse);
 
       cardContainer.innerHTML += ` <div data-folder="${folder}" class="card">
               <div class="play">
